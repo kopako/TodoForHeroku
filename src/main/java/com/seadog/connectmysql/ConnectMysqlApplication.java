@@ -22,8 +22,8 @@ public class ConnectMysqlApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Todo i = todoRepository.findByDone(false).stream().findFirst().get();
-        i.setDone(true);
+//        Todo i = todoRepository.findByDone(false).stream().findFirst().get();
+//        i.setDone(true);
     }
 
 
