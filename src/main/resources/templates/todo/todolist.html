@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TODO List</title>
+    <link rel="stylesheet"
+          type="text/css"
+          href="/css/bootstrap4-good-news.css">
+
+</head>
+<body>
+<div class="contentContainer" role="main" align="center">
+
+    <h1><a th:href="@{/}">Todos for today</a></h1>
+
+    <form  action="#" th:action="@{/search}" method="get">
+        <input  id="search" name="search" type="text" placeholder="Search" aria-label="Search">
+        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search">
+    </form>
+
+    <div name="create">
+        <a href="/create">New Todo</a>
+    </div>
+
+
+    <div name="table">
+        <h2 th:text="${search != null}? ('Search for: '+${search})"></h2>
+        <table class="pure-table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Date</th>
+                <th>Urgent</th>
+                <th>Done</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="todo : ${todos}" th:object="${todo}"
+                th:style="*{urgent}? 'background-color: lightpink;':(*{done}? 'background-color: lightgreen;')">
+                <td th:text="*{id}"></td>
+                <td th:text="*{title}"></td>
+                <td th:text="*{content}"></td>
+                <td th:text="*{dateOfCreation}"></td>
+                <td th:text="*{urgent}"></td>
+                <td th:text="*{done}"></td>
+                <td>
+                    <form action="#" th:action="@{'/'+ ${todo.id}+'/edit'}" method="get">
+                        <input type="submit" value="edit">
+                    </form>
+                </td>
+                <td>
+                    <form action="#" th:action="@{'/'+ ${todo.id}+'/delete'}" method="post">
+                        <input type="submit" value="delete">
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+
+            </tr>
+        </table>
+        <a href="/list?isActive=true">Active</a>
+        <br>
+        <a th:href="@{/assignees}">List of assignees</a>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TODO List</title>
+    <link rel="stylesheet"
+          type="text/css"
+          href="style.css">
+
+</head>
+<body>
+<h1><a th:href="@{/assignees}">Poor human beings</a> </h1>
+
+<form class="form-inline my-2 my-lg-0" action="#" th:action="@{/search}" method="get">
+    <input class="form-control mr-sm-2" id="search" name="search" type="text" placeholder="Search" aria-label="Search">
+    <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search">
+</form>
+
+<div name="create">
+    <a th:href="@{/createAssignee}">New Assignee</a>
+</div>
+
+
+<div name="table">
+    <h2 th:text="${searchAssignee != null}? ('Search for: '+${searchAssignee})"></h2>
+    <table class="pure-table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>E-mail</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="assignee : ${assignees}" th:object="${assignee}">
+            <td th:text="*{id}"></td>
+            <td th:text="*{name}"></td>
+            <td th:text="*{email}"></td>
+            <td>
+                <form action="#" th:action="@{'/assignee/'+ ${assignee.id}+'/edit'}" method="get">
+                    <input type="submit" value="edit">
+                </form>
+            </td>
+            <td>
+                <form action="#" th:action="@{'/assignee/'+ ${assignee.id}+'/delete'}" method="post">
+                    <input type="submit" value="delete">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+
+        </tr>
+    </table>
+    <br>
+</div>
+</body>
+</html>

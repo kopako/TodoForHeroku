@@ -2,6 +2,7 @@ package com.seadog.connectmysql.models;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Todo {
@@ -12,15 +13,18 @@ public class Todo {
     private boolean urgent;
     private boolean done;
     private Date dateOfCreation;
+    private String content;
+    private String description;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "Todo_Assignee",
+            joinColumns = @JoinColumn(name = "todo_id"), inverseJoinColumns = @JoinColumn(name = "project_id")
+    )
+    private List<Assignee> assignees;
 
     public Todo() {
         this.dateOfCreation = new Date();
-    }
-
-    public Todo(String title, boolean urgent, boolean done) {
-        this.title = title;
-        this.urgent = urgent;
-        this.done = done;
     }
 
     public Todo(String title) {
@@ -65,5 +69,21 @@ public class Todo {
 
     public void setDateOfCreation(Date dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

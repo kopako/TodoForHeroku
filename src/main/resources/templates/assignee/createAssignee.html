@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Todo</title>
+</head>
+<body>
+<div>
+    <form action="#" th:action="@{/createAssignee}" th:object="${assignee}" method="post">
+
+        <label for="name">Name</label>
+        <input id="name" placeholder="Name" required th:field="*{name}" type="text">
+
+        <label for="email">E-mail</label>
+        <input id="email" placeholder="E-mail" required th:field="*{email}" type="email">
+
+        <input type="submit" value="create">
+    </form>
+</div>
+
+</body>
+</html>

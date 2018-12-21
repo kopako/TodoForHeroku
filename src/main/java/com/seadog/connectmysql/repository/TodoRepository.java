@@ -11,4 +11,6 @@ import java.util.List;
 public interface TodoRepository extends CrudRepository<Todo, Long> {
 
     List<Todo> findByDone(boolean done);
+
+    List<Todo> findByTitleContainingOrContentContainingOrDescriptionContainingAllIgnoreCase(String title, String content, String description);
 }
