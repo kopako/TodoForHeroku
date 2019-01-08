@@ -1,6 +1,7 @@
 package com.seadog.connectmysql.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,8 +14,12 @@ public class Assignee {
     private String name;
     private String email;
 
-    @ManyToMany(mappedBy = "assignees")
+    @ManyToMany(mappedBy = "assignees" , fetch = FetchType.EAGER)
     private List<Todo> todos;
+
+    public Assignee() {
+        todos = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
@@ -38,8 +43,5 @@ public class Assignee {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Assignee() {
     }
 }

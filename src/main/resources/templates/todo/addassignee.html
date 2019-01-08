@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    <title>Add assignees to the task</title>
+</head>
+
+<div class="container">
+    <div class="col-md-4">
+        <div th:object="${todo}">
+            <p th:text="|*{title} created at: *{dateOfCreation} |"></p>
+            <p th:text="*{content}"></p>
+            <textarea th:text="*{description}"></textarea>
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+        <div style="border-style: solid">
+            Current Assignees
+            <ul id="assignees">
+                <li th:each="assignee : ${todo.assignees}" th:text="${assignee.name}"></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+
+        Add assignee
+        <form action="#" th:action="@{/addassignee}" method="post">
+            <input name="todoId" th:object="${todoId}" th:value="${todo.id}" hidden="hidden">
+            <select name="assigneeId">
+                <option value="null">Choose assignee</option>
+                <option th:each="assignee : ${assigneesselect}" th:value="${assignee.id}" th:text="${assignee.name}">
+                </option>
+            </select>
+            <input type="submit">
+        </form>
+        <a th:href="@{/}">#######Home######</a>
+    </div>
+
+
+</div>
+<body>
+</body>
+</html>

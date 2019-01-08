@@ -3,33 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Todo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+
 </head>
 <body>
-<h1>
-    Edit Todo
-</h1>
-<div>
-    <form action="#" th:action="@{/edit}" th:object="${todo}" method="post">
-        <input id="id" placeholder="id" th:field="*{id}" type="hidden">
+<div class="container">
 
-        <input type="text" th:field="*{title}">
+    <div class="col-md-6">
+        <form action="#" th:action="@{/edit}" th:object="${todo}" method="post">
+            <input id="id" placeholder="id" th:field="*{id}" type="hidden">
+            <h1 th:text="*{id == null}? 'Create task' : 'Edit task'">
+                Create Todo
+            </h1>
 
-        <label for="urgent">Urgent</label>
-        <input id="urgent" placeholder="urgent" th:field="*{urgent}" type="checkbox">
+            <div>
+                <label for="title">Title</label>
+                <input id="title" type="text" th:field="*{title}">
 
-        <label for="urgent">Urgent</label>
-        Done<input id="done" type="checkbox" th:field="*{done}" placeholder="done">
+                <label for="urgent">Urgent</label>
+                <input id="urgent" th:field="*{urgent}" type="checkbox">
 
-        <label for="content">Content</label>
-        Content<input id="content" type="text" th:field="*{content}">
+                <label for="done">Done</label>
+                <input id="done" type="checkbox" th:field="*{done}">
+            </div>
 
-        <label for="description">Description</label>
-        <input id="description" type="text" th:field="*{description}">
+            <div style="width: max-content">
+                <label for="content">Content</label>
+                <input id="content" type="text" th:field="*{content}" size="40">
+            </div>
 
-        <input type="submit" value="Edit">
-    </form>
+            <div>
+                <label for="description">Description</label>
+                <textarea id="description" type="text" th:field="*{description}"></textarea>
+            </div>
+
+            <div style="border-style: solid">
+                Current Assignees
+                <ul th:field="*{assignees}">
+                    <li th:each="assignee : ${todo.assignees}" th:value="${assignee}" th:text="${assignee.name}"></li>
+                </ul>
+            </div>
+
+
+            <input type="submit" value="Submit">
+        </form>
+
+        <div>
+            <a href="#" th:href="@{/{id}/addassignee(id=${todo.id})}">Add assignees</a>
+        </div>
+
+
+        <div class="col-md-6">
+            <label for="assignees">Available Assignees</label>
+            <ul id="assignees">
+                <li th:each="assignee : ${assignees}" th:text="${assignee.name}"></li>
+            </ul>
+        </div>
+
+    </div>
+
 </div>
-
 
 </body>
 </html>

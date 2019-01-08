@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>TODO List</title>
-    <link rel="stylesheet"
-          type="text/css"
-          href="/css/bootstrap4-good-news.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+
 
 </head>
 <body>
-<div class="contentContainer" role="main" align="center">
+<div align="center">
 
-    <h1><a th:href="@{/}">Todos for today</a></h1>
+    <h1><a th:href="@{/}">Tasks</a></h1>
 
-    <form  action="#" th:action="@{/search}" method="get">
-        <input  id="search" name="search" type="text" placeholder="Search" aria-label="Search">
+    <form action="#" th:action="@{/search}" method="get">
+        <input id="search" name="search" type="text" placeholder="What are You looking for" aria-label="Search">
         <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search">
     </form>
 
@@ -23,14 +26,16 @@
     </div>
 
 
-    <div name="table">
-        <h2 th:text="${search != null}? ('Search for: '+${search})"></h2>
-        <table class="pure-table">
+    <div style="margin: 0% 10%">
+        <h2 th:text="${search != null}? ('Search for: '+ ${search})"></h2>
+        <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Id</th>
+                <th hidden>Id</th>
                 <th>Title</th>
                 <th>Content</th>
+                <th>Assignees</th>
+
                 <th>Date</th>
                 <th>Urgent</th>
                 <th>Done</th>
@@ -41,10 +46,13 @@
 
             <tbody>
             <tr th:each="todo : ${todos}" th:object="${todo}"
-                th:style="*{urgent}? 'background-color: lightpink;':(*{done}? 'background-color: lightgreen;')">
-                <td th:text="*{id}"></td>
-                <td th:text="*{title}"></td>
+                th:style="*{done}? 'background-color: lightgreen;': (*{urgent}? 'background-color: yellow;':'' )">
+                <td th:text="*{id}" hidden="hidden"></td>
+                <td>
+                    <a th:href="@{/{id}/info(id=*{id})}" th:text="*{title}"></a>
+                </td>
                 <td th:text="*{content}"></td>
+                <td ><a href="#" th:href="@{/{id}/info(id=*{id})}" th:text="*{assignees.size()}" </td>
                 <td th:text="*{dateOfCreation}"></td>
                 <td th:text="*{urgent}"></td>
                 <td th:text="*{done}"></td>

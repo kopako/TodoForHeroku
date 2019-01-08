@@ -1,14 +1,13 @@
 package com.seadog.connectmysql.models;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String title;
     private boolean urgent;
     private boolean done;
@@ -16,26 +15,28 @@ public class Todo {
     private String content;
     private String description;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(
             name = "Todo_Assignee",
-            joinColumns = @JoinColumn(name = "todo_id"), inverseJoinColumns = @JoinColumn(name = "project_id")
+            joinColumns = @JoinColumn(name = "todo_id"),
+            inverseJoinColumns = @JoinColumn(name = "assignee_id")
     )
-    private List<Assignee> assignees;
+    private Set<Assignee> assignees;
 
     public Todo() {
         this.dateOfCreation = new Date();
+        this.assignees = new HashSet<>();
     }
 
     public Todo(String title) {
         this.title = title;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -85,5 +86,32 @@ public class Todo {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Assignee> getAssignees() {
+        return assignees;
+    }
+
+    public void setAssignees(Set<Assignee> assignees) {
+        this.assignees = assignees;
+    }
+
+    public void deleteAssignee(Assignee assignee) {
+        this.assignees.remove(assignee);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Todo{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", urgent=" + urgent +
+                ", done=" + done +
+                ", dateOfCreation=" + dateOfCreation +
+                ", content='" + content + '\'' +
+                ", description='" + description + '\'' +
+                ", assignees=" + assignees +
+                '}';
     }
 }

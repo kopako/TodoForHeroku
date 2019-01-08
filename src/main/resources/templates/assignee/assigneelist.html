@@ -3,58 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>TODO List</title>
-    <link rel="stylesheet"
-          type="text/css"
-          href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
 
 </head>
 <body>
-<h1><a th:href="@{/assignees}">Poor human beings</a> </h1>
+<div class="container">
+    <h1>Poor human beings</h1>
 
-<form class="form-inline my-2 my-lg-0" action="#" th:action="@{/search}" method="get">
-    <input class="form-control mr-sm-2" id="search" name="search" type="text" placeholder="Search" aria-label="Search">
-    <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search">
-</form>
+    <form class="form-inline my-2 my-lg-0" action="#" th:action="@{/search}" method="get">
+        <input class="form-control mr-sm-2" id="search" name="search" type="text" placeholder="Search"
+               aria-label="Search">
+        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search">
+    </form>
 
-<div name="create">
-    <a th:href="@{/createAssignee}">New Assignee</a>
-</div>
+    <div name="create">
+        <a th:href="@{/createAssignee}">New Assignee</a>
+    </div>
 
 
-<div name="table">
-    <h2 th:text="${searchAssignee != null}? ('Search for: '+${searchAssignee})"></h2>
-    <table class="pure-table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>E-mail</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-        </thead>
+    <div name="table">
+        <h2 th:text="${searchAssignee != null}? ('Search for: '+${searchAssignee})"></h2>
+        <table class="pure-table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>E-mail</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
 
-        <tbody>
-        <tr th:each="assignee : ${assignees}" th:object="${assignee}">
-            <td th:text="*{id}"></td>
-            <td th:text="*{name}"></td>
-            <td th:text="*{email}"></td>
-            <td>
-                <form action="#" th:action="@{'/assignee/'+ ${assignee.id}+'/edit'}" method="get">
-                    <input type="submit" value="edit">
-                </form>
-            </td>
-            <td>
-                <form action="#" th:action="@{'/assignee/'+ ${assignee.id}+'/delete'}" method="post">
-                    <input type="submit" value="delete">
-                </form>
-            </td>
-        </tr>
-        </tbody>
+            <tbody>
+            <tr th:each="assignee : ${assignees}" th:object="${assignee}">
+                <td th:text="*{id}"></td>
+                <td th:text="*{name}"></td>
+                <td th:text="*{email}"></td>
+                <td>
+                    <form action="#" th:action="@{'/assignee/'+ ${assignee.id}+'/edit'}" method="get">
+                        <input type="submit" value="edit">
+                    </form>
+                </td>
+                <td>
+                    <form action="#" th:action="@{'/assignee/'+ ${assignee.id}+'/delete'}" method="post">
+                        <input type="submit" value="delete">
+                    </form>
+                </td>
+            </tr>
+            </tbody>
 
-        </tr>
-    </table>
-    <br>
+            </tr>
+        </table>
+        <br>
+    </div>
+
+    <div>
+        <select th:field="${assignees}">
+            <option value="null">Choose assignee</option>
+            <option th:each="assignee : ${assignees}" th:value="${assignee.name}" th:text="${assignee.name}">
+            </option>
+        </select>
+    </div>
 </div>
 </body>
 </html>

@@ -29,22 +29,11 @@ public class AssigneeController {
         return "assignee/assigneelist";
     }
 
+
     @GetMapping("/createAssignee")
     public String createForm(Model model) {
         model.addAttribute("assignee", new Assignee());
-        return "assignee/createAssignee";
-    }
-
-    @PostMapping("/createAssignee")
-    public String createSubmit(@ModelAttribute Assignee assignee) {
-        assigneeRepository.save(assignee);
-        return "redirect:/assignees";
-    }
-
-    @PostMapping("/assignee/{id}/delete")
-    public String deleteById(@ModelAttribute("id") long id) {
-        assigneeRepository.deleteById(id);
-        return "redirect:/assignees";
+        return "assignee/editAssignee";
     }
 
     @GetMapping("/assignee/{id}/edit")
@@ -57,6 +46,12 @@ public class AssigneeController {
     @PostMapping("/assignee/edit")
     public String editSubmit(@ModelAttribute Assignee assignee) {
         assigneeRepository.save(assignee);
+        return "redirect:/assignees";
+    }
+
+    @PostMapping("/assignee/{id}/delete")
+    public String deleteById(@ModelAttribute("id") long id) {
+        assigneeRepository.deleteById(id);
         return "redirect:/assignees";
     }
 }

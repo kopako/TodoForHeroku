@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface AssigneeRepository extends CrudRepository<Assignee, Long> {
+
     List<Assignee> findByNameOrEmailAllIgnoreCase(String name, String email);
+
 }
